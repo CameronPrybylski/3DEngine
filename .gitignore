@@ -1,0 +1,15 @@
+# Ignore macOS files
+.DS_Store
+
+# Ignore all build artifacts
+build/
+
+# Ignore temporary files
+*.log
+*.tmp
+
+# Ignore CMake-generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
