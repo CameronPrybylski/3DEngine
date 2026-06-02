@@ -148,14 +148,11 @@ bool PhysicsSystem::CheckCollision(PhysicsBody& physBod1, PhysicsBody& physBod2)
             xAxis = (cosθ, sinθ)
             yAxis = (-sinθ, cosθ) (perpendicular)
     */
-    if(physBod1.transform->position.z != physBod2.transform->position.z)
-    {
-        return false;
-    }
+    
     OBB obb1 = physBod1.obb;
     OBB obb2 = physBod2.obb;
 
-    glm::vec3 axes[4] = {obb1.xAxis, obb2.xAxis, obb1.yAxis, obb2.yAxis};
+    glm::vec3 axes[6] = {obb1.xAxis, obb2.xAxis, obb1.yAxis, obb2.yAxis, obb1.zAxis, obb2.zAxis};
 
     for(auto& axis : axes)
     {
@@ -185,7 +182,7 @@ glm::vec2 PhysicsSystem::ProjectOBB(const OBB& obb, glm::vec3 axis)
     // Project all corners onto axis
     float min = glm::dot(obb.corners[0],axis);
     float max = min;
-    for (int i = 1; i < 4; i++) {
+    for (int i = 1; i < 8; i++) {
         float p = glm::dot(obb.corners[i], axis);
         if (p < min) min = p;
         if (p > max) max = p;
@@ -200,6 +197,10 @@ glm::vec2 PhysicsSystem::GetCollisionNormal(PhysicsBody& physBod1, PhysicsBody& 
     Transform& object2Transform = *physBod2.transform;
     RigidBodyComponent& objectRigidBody = *physBod1.rigidBody;
     RigidBodyComponent& object2RigidBody = *physBod2.rigidBody;
+    if(physBod2.rigidBody->isStatic)
+    {
+
+    }
     /*
     float dx = (objectTransform.position.x - object2Transform.position.x);
     float px = (objectTransform.scale.x + object2Transform.scale.x) - std::abs(dx);
@@ -265,6 +266,13 @@ void PhysicsSystem::ResolveCollision(PhysicsBody& physBod1, PhysicsBody& physBod
     Transform& object2Transform = *physBod2.transform;
     RigidBodyComponent& objectRigidBody = *physBod1.rigidBody;
     RigidBodyComponent& object2RigidBody = *physBod2.rigidBody;
+
+    if(object2RigidBody.isStatic)
+    {
+        objectTransform.position.y = object2Transform.position.y + ((object2Transform.scale.y / 2 ) + (objectTransform.scale.y / 2));
+        objectRigidBody.velocity.y = 0;
+        return;
+    }
     //if(CheckCollision(physBod1, physBod2))
            
     // Calculate half extents and sides
@@ -283,18 +291,23 @@ void PhysicsSystem::ResolveCollision(PhysicsBody& physBod1, PhysicsBody& physBod
     float aRight  = physBod1.obb.maxX;
     float aBottom = physBod1.obb.minY;
     float aTop    = physBod1.obb.maxY;
+    float aFront  = physBod1.obb.minZ;
+    float aBack   = physBod1.obb.maxZ;
 
     float bLeft   = physBod2.obb.minX;
     float bRight  = physBod2.obb.maxX;
     float bBottom = physBod2.obb.minY;
     float bTop    = physBod2.obb.maxY;
+    float bFront  = physBod2.obb.minZ;
+    float bBack   = physBod2.obb.maxZ;
 
     // Compute overlaps
     float overlapX = std::min(aRight, bRight) - std::max(aLeft, bLeft);
     float overlapY = std::min(aTop, bTop) - std::max(aBottom, bBottom);
+    float overlapZ = std::min(aBack, bBack) - std::max(aFront, bFront);
 
     // Resolve along smallest axis
-    if (overlapX < overlapY) {
+    if (overlapX < overlapY && overlapX < overlapZ) {
         
         if(objectTransform.position.x < object2Transform.position.x)
         {
@@ -305,7 +318,7 @@ void PhysicsSystem::ResolveCollision(PhysicsBody& physBod1, PhysicsBody& physBod
             objectTransform.position.x += overlapX;
         }
     } 
-    else if(overlapX > overlapY)
+    else if(overlapY < overlapX && overlapY < overlapZ)
     {
         if(objectTransform.position.y < object2Transform.position.y)
         {
@@ -316,11 +329,21 @@ void PhysicsSystem::ResolveCollision(PhysicsBody& physBod1, PhysicsBody& physBod
             objectTransform.position.y += overlapY;
         }
     }
+    else if (overlapZ < overlapX && overlapZ < overlapY)
+    {
+        if(objectTransform.position.z < object2Transform.position.z)
+        {
+            objectTransform.position.z -= overlapZ;
+        } 
+        else 
+        {
+            objectTransform.position.z += overlapZ;
+        }
+    }
     else
     {
-        objectTransform.position.y = objectRigidBody.previousPosition.y;
-        objectTransform.position.x = objectRigidBody.previousPosition.x;
+        objectTransform.position.y = object2Transform.position.y + ((object2Transform.scale.y / 2 ) + (objectTransform.scale.y / 2));
         objectRigidBody.velocity.y = 0;
-        objectRigidBody.velocity.x = 0;
+        return;
     }
 }

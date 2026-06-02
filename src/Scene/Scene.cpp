@@ -43,6 +43,7 @@ void Scene::DrawObjects(Renderer& renderer)
 {
     for(auto& obj : objectList)
     {
+        /*
         if(!obj->IsBatched() && (obj->transform.position.x + obj->transform.scale.x / 2 >= leftScreenEdge &&
            obj->transform.position.x - obj->transform.scale.x / 2 <= rightScreenEdge) 
           && 
@@ -55,6 +56,8 @@ void Scene::DrawObjects(Renderer& renderer)
         {
             obj->Render(renderer, camera);
         }
+        */
+       obj->Render(renderer, camera);
     }
 }
 

@@ -19,7 +19,6 @@ bool Engine::Create(const char* title, int w, int h)
     {
         return false;
     }
-    
     return true;
 }
 
@@ -65,7 +64,7 @@ void Engine::Run()
     int frameTime;
 
     while(!input.ShutDown())
-    {
+    {        
         frameStart = SDL_GetTicks();
         Uint32 currentTime = SDL_GetTicks();
         float dt = (currentTime - previousTime) / 1000.0f; // milliseconds to seconds

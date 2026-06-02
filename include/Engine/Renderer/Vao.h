@@ -11,6 +11,7 @@ public:
     void Create();
     void LinkVbo(Vbo& vbo, unsigned int layout);
     void LinkBatchVbo(Vbo& vbo, unsigned int layout);
+    void LinkCubeVbo(Vbo& vbo, unsigned int layout);
     void Bind() const;
     void Unbind() const;
     void Delete();

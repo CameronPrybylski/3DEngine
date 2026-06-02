@@ -52,6 +52,7 @@ add_library(Engine STATIC
     src/Renderer/Ibo.cpp
     src/Renderer/QuadMesh.cpp
     src/Renderer/BatchMesh.cpp
+    src/Renderer/CubeMesh.cpp
     src/Renderer/Renderer.cpp
     src/Renderer/Shader.cpp
     src/Renderer/Texture.cpp

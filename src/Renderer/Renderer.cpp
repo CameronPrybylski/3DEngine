@@ -1,5 +1,6 @@
 #include <Engine/Renderer/Renderer.h>
 #include <Engine/Renderer/TextTexture.h>
+#include <chrono>
 #include <iostream>
 void checkGLError(const char* label) {
     GLenum err;
@@ -14,6 +15,19 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
+}
+
+void Renderer::DrawCube(const Mesh& mesh, const Transform& modelMatrix, const Camera& camera, Shader& shader, glm::vec4 color)
+{
+    shader.Bind();
+    mesh.Bind();
+
+    
+    glm::mat4 mvp = camera.GetViewProjectionMatrix() * modelMatrix.GetModelMatrix(); 
+    shader.setUniformMat4f("u_MVP", mvp);
+    shader.setUniform4f("u_Color", color.x, color.y, color.z, color.w);
+    
+    glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, 0);
 }
 
 void Renderer::DrawQuad(const Mesh& mesh, const Transform& modelMatrix, const Camera& camera, Shader& shader, glm::vec4 color)
@@ -77,5 +91,6 @@ void Renderer::DrawTexturedBatch(const Mesh& mesh, const Camera& camera, Shader&
 
 void Renderer::Clear()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

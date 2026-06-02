@@ -22,12 +22,14 @@ Each OBB needs:
         center = glm::vec3(transform.position.x, transform.position.y, transform.position.z);
         halfWidth = transform.scale.x / 2;
         halfHeight = transform.scale.y / 2;
+        halfDepth = transform.scale.z / 2;
         rotation = transform.rotation;
         xAxis = glm::vec3(std::cos(glm::radians(rotation.z)), std::sin(glm::radians(rotation.z)), 0.0f);
         yAxis = glm::vec3(-1 * std::sin(glm::radians(rotation.z)), std::cos(glm::radians(rotation.z)), 0.0f);
+        zAxis = glm::vec3(0.0f, 0.0f, 1.0f);
         
         SetCorners();
-        SetMinMaxXY();
+        SetMinMaxXYZ();
     }
     OBB(){}
     void Update(Transform transform)
@@ -35,41 +37,53 @@ Each OBB needs:
         center = glm::vec3(transform.position.x, transform.position.y, transform.position.z);
         halfWidth = transform.scale.x / 2;
         halfHeight = transform.scale.y / 2;
+        halfDepth = transform.scale.z / 2;
         rotation = transform.rotation;
         xAxis = glm::vec3(std::cos(glm::radians(rotation.z)), std::sin(glm::radians(rotation.z)), 0.0f);
         yAxis = glm::vec3(-1 * std::sin(glm::radians(rotation.z)), std::cos(glm::radians(rotation.z)), 0.0f);
+        zAxis = glm::vec3(0.0f, 0.0f, 1.0f);
 
         SetCorners();
-        SetMinMaxXY();
+        SetMinMaxXYZ();
     }
     glm::vec3 center;
     float halfWidth;
     float halfHeight;
+    float halfDepth;
     glm::vec3 rotation;
     glm::vec3 xAxis;
     glm::vec3 yAxis;
+    glm::vec3 zAxis;
 
     void SetCorners()
     {
-        // Get the 4 corners of the OBB
+        // Get the 8 corners of the OBB
         glm::vec3 x = xAxis * halfWidth;
         glm::vec3 y = yAxis * halfHeight;
-        //glm::vec3 z = {0.0f, 0.0f, 0.0f};
+        glm::vec3 z = zAxis * halfDepth;
 
         corners = {
-            center + x + y,
-            center - x + y,
-            center - x - y,
-            center + x - y
+            center + x + y + z,
+            center - x + y + z,
+            center - x - y + z,
+            center + x - y + z,
+
+            center + x + y - z,
+            center - x + y - z,
+            center - x - y - z,
+            center + x - y - z,
+
         };
     }
 
-    void SetMinMaxXY()
+    void SetMinMaxXYZ()
     {
         minX = corners[0].x;
         maxX = corners[0].x;
         minY = corners[0].y;
         maxY = corners[0].y;
+        minZ = corners[0].z;
+        maxZ = corners[0].z;
         for(auto& corner : corners)
         {
             if(corner.x <= minX)
@@ -88,6 +102,14 @@ Each OBB needs:
             {
                 maxY = corner.y;
             }
+            if(corner.z <= minZ)
+            {
+                minZ = corner.z;
+            }
+            if(corner.z >= maxZ)
+            {
+                maxZ = corner.z;
+            }
         }
     }
 
@@ -97,6 +119,8 @@ Each OBB needs:
     float maxX;
     float minY;
     float maxY;
+    float minZ;
+    float maxZ;
 
 };
 
