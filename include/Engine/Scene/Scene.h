@@ -7,6 +7,8 @@
 #include <Engine/Scene/GameObject.h>
 #include <Engine/Scene/Camera.h>
 #include <Engine/Renderer/Renderer.h>
+#include <Engine/Core/ObjectLoader.h>
+
 
 class Scene {
 public: 
@@ -47,4 +49,5 @@ protected:
     std::vector<std::shared_ptr<GameObject>> staticObjects;
     std::unordered_map<std::string, std::shared_ptr<GameObject>> nonDrawnObjects;
     Camera camera;
+    ObjectLoader objectLoader;
 };

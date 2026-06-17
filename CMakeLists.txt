@@ -39,6 +39,7 @@ add_library(Engine STATIC
     src/stb_image.cpp
     src/Core/Window.cpp
     src/Core/Input.cpp
+    src/Core/ObjectLoader.cpp
     src/Physics/PhysicsSystem.cpp
     src/Scene/Camera.cpp
     src/Scene/GameObject.cpp
@@ -53,6 +54,9 @@ add_library(Engine STATIC
     src/Renderer/QuadMesh.cpp
     src/Renderer/BatchMesh.cpp
     src/Renderer/CubeMesh.cpp
+    src/Renderer/ObjectMesh.cpp
+    src/Renderer/Material.cpp
+    src/Renderer/Texture3D.cpp
     src/Renderer/Renderer.cpp
     src/Renderer/Shader.cpp
     src/Renderer/Texture.cpp

@@ -32,7 +32,7 @@ public:
     void OnUpdate(const glm::vec3& positionChange);
 
     void SetCamera(glm::vec3 objPosition);
-    void Update(glm::vec3 objPosition, float xOffset = 0.0f, float yOffset = 0.0f, float changeInDistance = 0.0f);
+    void Update(glm::vec3 objPosition, glm::vec3 objRotation, float xOffset = 0.0f, float yOffset = 0.0f, float changeInDistance = 0.0f);
     void UpdateDistanceFromPlayer(float distance){this->distanceFromPlayer += distance;}
 
     float GetZAway(){return this->zAway;}

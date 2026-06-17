@@ -45,6 +45,20 @@ void Vao::LinkCubeVbo(Vbo& vbo, unsigned int layout)
     vbo.Unbind();
 }
 
+void Vao::LinkTextureCubeVbo(Vbo& vbo, unsigned int layout)
+{
+    vbo.Bind();
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*) 0); // Position Coord
+
+    
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*) (3 * sizeof(float))); // Texture Coord
+    
+    
+    vbo.Unbind();
+}
+
 void Vao::LinkBatchVbo(Vbo& vbo, unsigned int layout)
 {
     vbo.Bind();

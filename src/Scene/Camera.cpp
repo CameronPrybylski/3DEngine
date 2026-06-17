@@ -77,7 +77,7 @@ void Camera::SetCamera(glm::vec3 objPosition)
     vp = projection * view; 
 }
 
-void Camera::Update(glm::vec3 objPosition, float xOffset, float yOffset, float changeInDistance)
+void Camera::Update(glm::vec3 objPosition, glm::vec3 objRotation, float xOffset, float yOffset, float changeInDistance)
 {
     //The upwards direction vector of your world, which determines camera roll aka y is up 
     cameraUp     = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -85,7 +85,9 @@ void Camera::Update(glm::vec3 objPosition, float xOffset, float yOffset, float c
     this->distanceFromPlayer += changeInDistance;
     pitch += yOffset;
     angleAroundPlayer += xOffset;
-    yaw = 90 - angleAroundPlayer;
+    if(angleAroundPlayer > 360.0f) angleAroundPlayer = angleAroundPlayer - 360.0f;
+    if(angleAroundPlayer < 0.0f) angleAroundPlayer = 360.0f + angleAroundPlayer;
+    yaw = 90 - angleAroundPlayer; //(angleAroundPlayer + objRotation.y);
 
     // Constrain pitch to avoid flipping
     if(pitch > 89.0f)  pitch = 89.0f;

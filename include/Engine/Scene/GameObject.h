@@ -1,6 +1,8 @@
 #pragma once
 #include <Engine/Renderer/Renderer.h>
 #include <Engine/Renderer/QuadMesh.h>
+#include <Engine/Renderer/ObjectMesh.h>
+#include <Engine/Renderer/Material.h>
 #include <Engine/Scene/Transform.h>
 #include <Engine/Core/Input.h>
 
@@ -21,6 +23,7 @@ public:
     std::shared_ptr<Mesh> mesh;
     Texture texture;
     Transform transform;
+    std::map<std::string, Material> materialMap;
     RigidBodyComponent rigidBody;
     std::string shaderName;
     glm::vec4 color;

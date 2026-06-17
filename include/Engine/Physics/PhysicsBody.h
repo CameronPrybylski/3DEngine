@@ -42,7 +42,6 @@ Each OBB needs:
         xAxis = glm::vec3(std::cos(glm::radians(rotation.z)), std::sin(glm::radians(rotation.z)), 0.0f);
         yAxis = glm::vec3(-1 * std::sin(glm::radians(rotation.z)), std::cos(glm::radians(rotation.z)), 0.0f);
         zAxis = glm::vec3(0.0f, 0.0f, 1.0f);
-
         SetCorners();
         SetMinMaxXYZ();
     }
