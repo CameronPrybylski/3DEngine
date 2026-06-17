@@ -279,7 +279,6 @@ void ObjectLoader::LoadMatIndecies(std::vector<std::string> vertexPos, std::vect
             std::stringstream sub_stream(group);
             std::string element;
 
-            // 3. Sub-parse the group by slash '/'
             int position = 1;
             while (std::getline(sub_stream, element, '/')) 
             {
@@ -302,9 +301,9 @@ void ObjectLoader::LoadMatIndecies(std::vector<std::string> vertexPos, std::vect
             else
             {
                 unsigned int newIndex = vertices.size();
-                vertices.push_back(vertex);
-                vertexInd[vertex] = newIndex;
                 indecies.push_back(newIndex);
+                vertexInd[vertex] = newIndex;
+                vertices.push_back(vertex);
             }
         }
         std::shared_ptr<ObjectMesh> subMesh = std::make_shared<ObjectMesh>();
