@@ -270,15 +270,10 @@ void ObjectLoader::LoadMatIndecies(std::vector<std::string> vertexPos, std::vect
         std::vector<Vertex> vertices;
         for(int i = 0; i < itr->second.size(); ++i)
         {
-            bool first = true;
             Vertex vertex;
-            unsigned int vI;
-            unsigned int vtI;
-            
             std::string group = itr->second[i];
             std::stringstream sub_stream(group);
             std::string element;
-
             int position = 1;
             while (std::getline(sub_stream, element, '/')) 
             {

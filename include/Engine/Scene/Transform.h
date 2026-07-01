@@ -8,7 +8,7 @@ public:
     glm::vec3 position{0.0f};
     glm::vec3 rotation{0.0f};
     glm::vec3 scale{1.0f, 1.0f, 1.0f};
-
+    
     glm::mat4 GetModelMatrix() const {
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, position);

@@ -30,5 +30,6 @@ public:
     std::string name;
     std::string type = "";
     bool batched = false;
+    float scaleMulti = 1.0f;
 
 };

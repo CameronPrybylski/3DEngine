@@ -15,7 +15,7 @@ void PhysicsSystem::Init(glm::vec3 gravity)
     this->gravity = gravity;
 }
 
-void PhysicsSystem::RegisterBody(Transform& transform, RigidBodyComponent& rigidBody, std::string id)
+void PhysicsSystem::RegisterBody(Transform& transform, RigidBodyComponent& rigidBody, std::string id, float scaleMulti)
 {
     PhysicsBody physBod;
     physBod.transform = &transform;
@@ -23,6 +23,7 @@ void PhysicsSystem::RegisterBody(Transform& transform, RigidBodyComponent& rigid
     OBB obb(transform);
     physBod.obb = obb;
     physBod.id = id;
+    physBod.transform->scale *= scaleMulti;
     physicsBodies.push_back(physBod);
 }
 
@@ -77,7 +78,6 @@ void PhysicsSystem::Integrate(Transform& objectTransform, RigidBodyComponent& ob
     objectRigidBody.previousPosition = objectTransform.position;
     objectRigidBody.velocity += gravity * dt;
     objectTransform.position += objectRigidBody.velocity * dt;
-    
 }
 
 std::vector<std::pair<PhysicsBody, PhysicsBody>> PhysicsSystem::BroadPhaseCollision()
