@@ -19,6 +19,7 @@ public:
     virtual void OnCollision(std::shared_ptr<GameObject> collidedObj, glm::vec2 collisionNormal, float dt) {}
 
     bool IsBatched(){return batched;}
+    void SetRendPosOffSet(glm::vec3 posOffset){this->renderPosOffset = posOffset;}
 
     std::shared_ptr<Mesh> mesh;
     Texture texture;
@@ -31,5 +32,8 @@ public:
     std::string type = "";
     bool batched = false;
     float scaleMulti = 1.0f;
+    glm::vec3 renderPosOffset = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 oldPos;
+    glm::vec3 oldScale;
 
 };

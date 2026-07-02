@@ -22,10 +22,14 @@ void GameObject::Update(float dt)
 
 void GameObject::Update(const Input& input, float dt)
 {
-    
+    oldPos = transform.position;
+    transform.position += renderPosOffset;
+    oldScale = transform.scale;
+    transform.scale /= scaleMulti;
 }
 
 void GameObject::Render(Renderer &renderer, const Camera& camera)
 {
-
+    transform.position = oldPos;
+    transform.scale = oldScale;
 }
