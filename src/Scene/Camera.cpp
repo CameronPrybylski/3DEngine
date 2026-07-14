@@ -53,7 +53,7 @@ void Camera::SetPerspectiveProjMat(float minX, float maxX, float minY, float max
     float screenWidth = maxX - minX;
     float screenHeight = maxY - minY;
     float aspectRatio = screenWidth / screenHeight;
-    projection = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 3000.0f);
+    projection = glm::perspective(glm::radians(45.0f), aspectRatio, minZ, maxZ);
 }
 
 void Camera::SetVP()
