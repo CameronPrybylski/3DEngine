@@ -42,7 +42,7 @@ std::vector<CollisionEvent> PhysicsSystem::Update(float dt)
     for(auto& possibleCollision : possibleCollsions)
     {
         if(CheckCollision(possibleCollision.first, possibleCollision.second))
-        { 
+        {
             CollisionEvent collEvent;
             collEvent.body1 = possibleCollision.first;
             collEvent.body2 = possibleCollision.second;

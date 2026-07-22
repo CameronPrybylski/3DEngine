@@ -24,6 +24,7 @@ public:
     std::shared_ptr<Mesh> mesh;
     Texture texture;
     Transform transform;
+    Transform hitBox;
     std::map<std::string, Material> materialMap;
     RigidBodyComponent rigidBody;
     std::string shaderName;
