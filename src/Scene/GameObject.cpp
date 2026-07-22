@@ -26,7 +26,6 @@ void GameObject::Update(const Input& input, float dt)
     oldPos = transform.position;
     transform.position += renderPosOffset;
     oldScale = transform.scale;
-    transform.scale /= scaleMulti;
 }
 
 void GameObject::Render(Renderer &renderer, const Camera& camera)

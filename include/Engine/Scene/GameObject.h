@@ -32,7 +32,6 @@ public:
     std::string name;
     std::string type = "";
     bool batched = false;
-    float scaleMulti = 1.0f;
     glm::vec3 renderPosOffset = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 oldPos;
     glm::vec3 oldScale;

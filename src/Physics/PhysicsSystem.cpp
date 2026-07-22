@@ -15,7 +15,7 @@ void PhysicsSystem::Init(glm::vec3 gravity)
     this->gravity = gravity;
 }
 
-void PhysicsSystem::RegisterBody(Transform& transform, RigidBodyComponent& rigidBody, std::string id, float scaleMulti)
+void PhysicsSystem::RegisterBody(Transform& transform, RigidBodyComponent& rigidBody, std::string id)
 {
     PhysicsBody physBod;
     physBod.transform = &transform;
@@ -23,7 +23,6 @@ void PhysicsSystem::RegisterBody(Transform& transform, RigidBodyComponent& rigid
     OBB obb(transform);
     physBod.obb = obb;
     physBod.id = id;
-    physBod.transform->scale *= scaleMulti;
     physicsBodies.push_back(physBod);
 }
 
