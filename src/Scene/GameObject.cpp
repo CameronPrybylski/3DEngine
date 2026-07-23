@@ -25,11 +25,9 @@ void GameObject::Update(const Input& input, float dt)
     transform.position = hitBox.position;
     oldPos = transform.position;
     transform.position += renderPosOffset;
-    oldScale = transform.scale;
 }
 
 void GameObject::Render(Renderer &renderer, const Camera& camera)
 {
     transform.position = oldPos;
-    transform.scale = oldScale;
 }
